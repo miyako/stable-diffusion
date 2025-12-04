@@ -1,4 +1,4 @@
-# miyako-stable-diffusion-cpp
+# stable-diffusion-cpp
 Local inference engine
 
 #### Apple Silicon
