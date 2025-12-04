@@ -1,4 +1,4 @@
-# stable-diffusion-cpp
+# stable-diffusion
 Local inference engine
 
 #### Apple Silicon
