@@ -11,8 +11,6 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 	var $command : Text
 	$command:=This:C1470.escape(This:C1470.executablePath)
 	
-	$command+=" -s "
-	
 	If (Value type:C1509($option.image_generation_model)=Is object:K8:27)\
 		 && (OB Instance of:C1731($option.image_generation_model; 4D:C1709.File))\
 		 && ($option.image_generation_model.exists)
@@ -27,7 +25,7 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 	
 	For each ($arg; OB Entries:C1720($option))
 		Case of 
-			: (["version"; "help"; "port"].includes($arg.key))
+			: (["version"; "help"; "image_generation_model"].includes($arg.key))
 				continue
 		End case 
 		$valueType:=Value type:C1509($arg.value)
@@ -47,7 +45,5 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 	End for each 
 	
 	//SET TEXT TO PASTEBOARD($command)
-	
-	ALERT:C41($command)
 	
 	return This:C1470.controller.execute($command).worker

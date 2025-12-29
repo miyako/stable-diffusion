@@ -1,4 +1,3 @@
-TRACE:C157
 var $SD : cs:C1710.SD
 
 If (False:C215)
@@ -34,7 +33,7 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 	$URL:="gpustack/stable-diffusion-xl-1.0-turbo-GGUF/stable-diffusion-xl-1.0-turbo-Q4_0.gguf"
 	$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "image"; "stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
 	
-	$options:={host: "0.0.0.0"}
+	$options:={listen_ip: "0.0.0.0"}
 	var $huggingfaces : cs:C1710.event.huggingfaces
 	$huggingfaces:=cs:C1710.event.huggingfaces.new([$image])
 	

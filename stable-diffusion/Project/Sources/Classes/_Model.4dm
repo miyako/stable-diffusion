@@ -27,8 +27,9 @@ Function onDownload($oid : Text)
 	
 	If ($downloaded#Null:C1517)
 		Case of 
-			: ($downloaded.domain="image.generation")
-				This:C1470.options.image_generation_model:=$downloaded.folder.folder($downloaded.path).parent
+			: ($downloaded.domain="image")
+				This:C1470.options.image_generation_model:=OB Instance of:C1731($downloaded.folder; 4D:C1709.Folder)\
+					 ? $downloaded.folder.folder($downloaded.path).parent : $downloaded.folder.parent.file($downloaded.path)
 		End case 
 	End if 
 	

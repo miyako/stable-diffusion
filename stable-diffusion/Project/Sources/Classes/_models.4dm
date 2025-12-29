@@ -88,7 +88,9 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 Function download()
 	
 	For each ($file; This:C1470.files)
-		If ($file.folder.exists) && ($file.folder.file($file.path).exists) && ($file.folder.file($file.path).size=$file.size)
+		If ($file.folder.exists)\
+			 && (OB Instance of:C1731($file.folder; 4D:C1709.Folder) ? ($file.folder.file($file.path).exists) : ($file.folder.exists))\
+			 && (OB Instance of:C1731($file.folder; 4D:C1709.Folder) ? ($file.folder.file($file.path).size=$file.size) : ($file.folder.size=$file.size))
 			This:C1470.onDownload($file.oid)
 			continue
 		End if 
