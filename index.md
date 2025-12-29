@@ -11,7 +11,7 @@ layout: default
 
 #### Abstract
 
-T.B.D.
+[**stable-diffusion.cpp**](https://github.com/leejet/stable-diffusion.cpp) is diffusion model (SD,Flux,Wan,Qwen Image,Z-Image,...) inference engine written in C/C++.
 
 #### Usage
 
