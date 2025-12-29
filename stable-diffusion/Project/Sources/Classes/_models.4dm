@@ -37,7 +37,7 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 						$components:=Split string:C1554($URL; "/")
 						$USER:=$components.shift()
 						$REPO:=$components.shift()
-						$API:=["https://huggingface.co/api/models"; $URL; "?recursive=true"].join("/")
+						$API:=["https://huggingface.co/api/models"; $USER; $REPO; "tree"; $BRANCH; "?recursive=true"].join("/")
 					: (Match regex:C1019("(^|\\/[^/]+){2,}"; $huggingface.URL; 1; $pos; $len))
 						$URL:=$huggingface.URL
 						$components:=Split string:C1554($URL; "/")
@@ -68,6 +68,9 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 							: (OB Instance of:C1731($huggingface.folder; 4D:C1709.File))
 								var $file : Object
 								$file:=$request.response.body.query("path == :1"; $huggingface.name).first()
+								If ($file=Null:C1517)
+									continue
+								End if 
 								$file.domain:=$huggingface.domain
 								$file.folder:=$huggingface.folder
 								$file.folder:=$huggingface.folder
