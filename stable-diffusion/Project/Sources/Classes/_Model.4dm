@@ -1,4 +1,5 @@
 property image_generation_model : 4D:C1709.Folder
+property diffusion_model : 4D:C1709.Folder
 
 Class extends _models
 
@@ -6,7 +7,9 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 	
 	Super:C1705($port; $huggingfaces; $options; $formula; $event)
 	
-	This:C1470.download()
+	If (Not:C34(This:C1470.offline))
+		This:C1470.download()
+	End if 
 	
 Function models() : cs:C1710.event.models
 	
@@ -26,10 +29,17 @@ Function onDownload($oid : Text)
 	$downloaded:=This:C1470.files.query("oid == :1"; $oid).first()
 	
 	If ($downloaded#Null:C1517)
+		var $model : Object
+		$model:=OB Instance of:C1731($downloaded.folder; 4D:C1709.Folder)\
+			 ? $downloaded.folder.folder($downloaded.path).parent : $downloaded.folder
+		
 		Case of 
 			: ($downloaded.domain="image")
-				This:C1470.options.image_generation_model:=OB Instance of:C1731($downloaded.folder; 4D:C1709.Folder)\
-					 ? $downloaded.folder.folder($downloaded.path).parent : $downloaded.folder.parent.file($downloaded.path)
+				This:C1470.options.image_generation_model:=$model
+			: ($downloaded.domain="diffusion")
+				This:C1470.options.diffusion_model:=$model
+			: (["vae"; "clip_l"; "t5xxl"; "llm"]).includes($downloaded.domain)
+				This:C1470.options[$downloaded.domain]:=$model
 		End case 
 	End if 
 	

@@ -19,6 +19,21 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 		$command+=" "
 	End if 
 	
+	If (Value type:C1509($option.diffusion_model)=Is object:K8:27)\
+		 && (OB Instance of:C1731($option.diffusion_model; 4D:C1709.File))\
+		 && ($option.diffusion_model.exists)
+		$command+=" --diffusion-model "
+		$command+=This:C1470.escape(This:C1470.expand($option.diffusion_model).path)
+		$command+=" "
+	End if 
+	
+	If (OB Instance of:C1731($option.clip_l; 4D:C1709.File))\
+		 && ($option.clip_l.exists)
+		$command+=" --clip_l "
+		$command+=This:C1470.escape(This:C1470.expand($option.clip_l).path)
+		$command+=" "
+	End if 
+	
 	$command+=" --listen-port "+String:C10($option.port)+" "
 	
 	var $arg : Object
@@ -27,7 +42,7 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 	
 	For each ($arg; OB Entries:C1720($option))
 		Case of 
-			: (["version"; "help"; "port"; "image_generation_model"].includes($arg.key))
+			: (["clip_l"; "version"; "help"; "port"; "diffusion_model"; "image_generation_model"].includes($arg.key))
 				continue
 		End case 
 		$valueType:=Value type:C1509($arg.value)
