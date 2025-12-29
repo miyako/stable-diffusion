@@ -18,7 +18,48 @@ T.B.D.
 Instantiate `cs.SD.SD` in your *On Startup* database method:
 
 ```4d
+var $SD : cs.SD.SD
 
+If (False)
+    $SD:=cs.SD.SD.new()  //default
+Else 
+    var $homeFolder : 4D.Folder
+    $homeFolder:=Folder(fk home folder).folder(".Stable-Diffusion")
+    var $URL : Text
+    var $port : Integer
+    
+    var $event : cs.event.event
+    $event:=cs.event.event.new()
+    /*
+        Function onError($params : Object; $error : cs.event.error)
+        Function onSuccess($params : Object; $models : cs.event.models)
+        Function onData($request : 4D.HTTPRequest; $event : Object)
+        Function onResponse($request : 4D.HTTPRequest; $event : Object)
+        Function onTerminate($worker : 4D.SystemWorker; $params : Object)
+    */
+    
+    $event.onError:=Formula(ALERT($2.message))
+    $event.onSuccess:=Formula(ALERT($2.models.extract("name").join(",")+" loaded!"))
+    $event.onData:=Formula(LOG EVENT(Into 4D debug message; This.file.fullName+":"+String((This.range.end/This.range.length)*100; "###.00%")))
+    $event.onData:=Formula(MESSAGE(This.file.fullName+":"+String((This.range.end/This.range.length)*100; "###.00%")))
+    $event.onResponse:=Formula(LOG EVENT(Into 4D debug message; This.file.fullName+":download complete"))
+    $event.onResponse:=Formula(MESSAGE(This.file.fullName+":download complete"))
+    $event.onTerminate:=Formula(LOG EVENT(Into 4D debug message; (["process"; $1.pid; "terminated!"].join(" "))))
+    
+    $port:=8080
+    
+    $model:=$homeFolder.file("gpustack/stable-diffusion-xl-1.0-turbo/stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
+    $path:=""
+    $URL:="gpustack/stable-diffusion-xl-1.0-turbo-GGUF/stable-diffusion-xl-1.0-turbo-Q4_0.gguf"
+    $image:=cs.event.huggingface.new($model; $URL; $path; "image"; "stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
+    
+    $options:={listen_ip: "0.0.0.0"}
+    var $huggingfaces : cs.event.huggingfaces
+    $huggingfaces:=cs.event.huggingfaces.new([$image])
+    
+    $SD:=cs.SD.SD.new($port; $huggingfaces; $options; $event)
+    
+End if 
 ```
 
 Unless the server is already running (in which case the costructor does nothing), the following procedure runs in the background:
