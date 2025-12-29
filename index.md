@@ -77,7 +77,7 @@ curl http://localhost:8080/v1/images/generations \
     "size": "512x512",
     "n": 1,
     "response_format": "url"
-  }'
+  }' > response.json
 ```
 
 Or, use AI Kit:

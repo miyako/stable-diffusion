@@ -37,6 +37,6 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 	var $huggingfaces : cs:C1710.event.huggingfaces
 	$huggingfaces:=cs:C1710.event.huggingfaces.new([$image])
 	
-	$SD:=cs:C1710.SD.new($port; $huggingfaces; $options; $event)
+	$SD:=cs:C1710.SD.new($port; $huggingfaces; $homeFolder; $options; $event)
 	
 End if 

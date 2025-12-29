@@ -46,6 +46,8 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 		End case 
 	End for each 
 	
+	This:C1470.controller.currentDirectory:=$option.HONE
+	
 	//SET TEXT TO PASTEBOARD($command)
 	
 	return This:C1470.controller.execute($command).worker
