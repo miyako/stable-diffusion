@@ -1,0 +1,35 @@
+{
+	"version": 2100,
+	"dependencies": {
+		"event": {
+			"github": "miyako/event",
+			"version": "latest",
+			"tag": "20.0.10",
+			"loaded": true,
+			"found": true,
+			"htmlURL": "https://github.com/miyako/event/releases/tag/20.0.10",
+			"archiveURL": "https://api.github.com/repos/miyako/event/releases/assets/334045463",
+			"path": "Macintosh HD:Users:miyako:Library:Caches:4D:Dependencies:.github:miyako:event:20.0.10:"
+		},
+		"tcp": {
+			"github": "miyako/tcp",
+			"version": "latest",
+			"tag": "20.0.8",
+			"htmlURL": "https://github.com/miyako/tcp/releases/tag/20.0.8",
+			"archiveURL": "https://api.github.com/repos/miyako/tcp/releases/assets/328207330",
+			"loaded": true,
+			"found": true,
+			"path": "Macintosh HD:Users:miyako:Library:Caches:4D:Dependencies:.github:miyako:tcp:20.0.8:"
+		},
+		"workers": {
+			"github": "miyako/workers",
+			"version": "latest",
+			"tag": "20.0.15",
+			"htmlURL": "https://github.com/miyako/workers/releases/tag/20.0.15",
+			"archiveURL": "https://api.github.com/repos/miyako/workers/releases/assets/330101166",
+			"loaded": true,
+			"found": true,
+			"path": "Macintosh HD:Users:miyako:Library:Caches:4D:Dependencies:.github:miyako:workers:20.0.15:"
+		}
+	}
+}

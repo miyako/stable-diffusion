@@ -1,0 +1,192 @@
+{
+	"Sources/DatabaseMethods/onStartup.4dm": {
+		"startSelection": 41,
+		"endSelection": 41,
+		"firstSelectedLine": 42,
+		"lastSelectedLine": 42,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-29T09:41:35.284Z"
+	},
+	"Sources/Classes/_llama.4dm": {
+		"startSelection": 14,
+		"endSelection": 14,
+		"firstSelectedLine": 22,
+		"lastSelectedLine": 22,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-23T23:06:49.354Z"
+	},
+	"Sources/Classes/_onnx_Controller.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-19T05:27:22.174Z"
+	},
+	"Sources/Classes/_onnx.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-23T23:06:49.354Z"
+	},
+	"Sources/Classes/_server.4dm": {
+		"startSelection": 77,
+		"endSelection": 77,
+		"firstSelectedLine": 27,
+		"lastSelectedLine": 27,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-29T09:59:53.372Z"
+	},
+	"Sources/DatabaseMethods/onExit.4dm": {
+		"startSelection": 5,
+		"endSelection": 5,
+		"firstSelectedLine": 2,
+		"lastSelectedLine": 2,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-23T23:07:36.649Z"
+	},
+	"Sources/Classes/onnx.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 13,
+		"lastSelectedLine": 13,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-27T22:54:01.956Z"
+	},
+	"Sources/Classes/_Model.4dm": {
+		"startSelection": 7,
+		"endSelection": 7,
+		"firstSelectedLine": 47,
+		"lastSelectedLine": 47,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-29T09:59:53.371Z"
+	},
+	"Sources/Classes/_interface.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-28T14:11:03.660Z"
+	},
+	"Sources/Classes/huggingface.4dm": {
+		"startSelection": 9,
+		"endSelection": 9,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-27T22:20:28.264Z"
+	},
+	"Sources/Classes/_download.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 20,
+		"lastSelectedLine": 20,
+		"folding": [
+			20,
+			56,
+			60,
+			67,
+			69,
+			72,
+			77,
+			86,
+			90,
+			92,
+			93,
+			96,
+			100,
+			105,
+			107,
+			109,
+			115,
+			117,
+			121,
+			122,
+			123,
+			125,
+			130,
+			131,
+			133,
+			140,
+			142
+		],
+		"bookmarks": [],
+		"stamp": "2025-12-28T12:33:53.998Z"
+	},
+	"Sources/Methods/start.4dm": {
+		"startSelection": 59,
+		"endSelection": 59,
+		"firstSelectedLine": 3,
+		"lastSelectedLine": 3,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-27T22:52:13.172Z"
+	},
+	"Sources/Classes/_ONNX_Controller.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 23,
+		"lastSelectedLine": 23,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-19T05:27:22.174Z"
+	},
+	"Sources/Classes/_ONNX.4dm": {
+		"startSelection": 0,
+		"endSelection": 0,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-27T23:39:17.223Z"
+	},
+	"Sources/Classes/_models.4dm": {
+		"startSelection": 7,
+		"endSelection": 7,
+		"firstSelectedLine": 77,
+		"lastSelectedLine": 77,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-29T09:59:53.372Z"
+	},
+	"Sources/Classes/ONNX.4dm": {
+		"startSelection": 65,
+		"endSelection": 65,
+		"firstSelectedLine": 20,
+		"lastSelectedLine": 20,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-29T09:59:53.373Z"
+	},
+	"Sources/Methods/main.4dm": {
+		"startSelection": 9,
+		"endSelection": 9,
+		"firstSelectedLine": 14,
+		"lastSelectedLine": 14,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-28T12:47:05.816Z"
+	},
+	"Trash/Methods/(onResponse).4dm": {
+		"startSelection": 5,
+		"endSelection": 5,
+		"firstSelectedLine": 0,
+		"lastSelectedLine": 0,
+		"folding": [],
+		"bookmarks": [],
+		"stamp": "2025-12-28T11:58:03.051Z"
+	}
+}

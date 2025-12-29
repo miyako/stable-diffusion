@@ -1,0 +1,580 @@
+{
+	"_Model": {
+		"functions": {
+			"models": 2147483586,
+			"onDownload": 2147483585,
+			"start": 2147483584
+		},
+		"properties": {
+			"chat_completion_model": {
+				"name": "",
+				"fo": 1709,
+				"className": "Folder",
+				"componentName": "",
+				"content": {}
+			},
+			"embeggings_model": {
+				"name": "",
+				"fo": 1709,
+				"className": "Folder",
+				"componentName": "",
+				"content": {}
+			}
+		},
+		"extends": "_models",
+		"constructorID": 2147483587
+	},
+	"_server": {
+		"functions": {
+			"start": 2147483613
+		},
+		"extends": "_ONNX",
+		"constructorID": 2147483614
+	},
+	"_CLI_Controller": {
+		"functions": {
+			"get commands": {
+				"id": 2147483610,
+				"resultFunctionCode": 1488
+			},
+			"get complete": {
+				"id": 2147483609,
+				"resultFunctionCode": 305
+			},
+			"get instance": {
+				"id": 2147483608,
+				"resultFunctionCode": 1710,
+				"resultClass": "_CLI"
+			},
+			"get worker": {
+				"id": 2147483607,
+				"resultFunctionCode": 1709,
+				"resultClass": "SystemWorker"
+			},
+			"execute": 2147483606,
+			"terminate": 2147483605,
+			"_onEvent": 2147483604,
+			"_onExecute": 2147483603,
+			"_execute": 2147483602,
+			"_onComplete": 2147483601,
+			"_abort": 2147483600,
+			"_terminate": 2147483599
+		},
+		"properties": {
+			"_complete": {
+				"name": "",
+				"fo": 305,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"hideWindow": {
+				"name": "",
+				"fo": 305,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"dataType": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"encoding": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"variables": {
+				"name": "",
+				"fo": 1216,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_commands": {
+				"name": "",
+				"fo": 1488,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_messages": {
+				"name": "",
+				"fo": 1488,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_contexts": {
+				"name": "",
+				"fo": 1488,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"timeout": {
+				"name": "",
+				"fo": 1683,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_worker": {
+				"name": "",
+				"fo": 1709,
+				"className": "SystemWorker",
+				"componentName": "",
+				"content": {}
+			},
+			"onResponse": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"_onResponse": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"onTerminate": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"_onTerminate": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"_instance": {
+				"name": "",
+				"fo": 1710,
+				"className": "_CLI",
+				"componentName": "",
+				"content": {}
+			},
+			"currentDirectory": {
+				"name": "",
+				"fo": 1709,
+				"className": "Folder",
+				"componentName": "",
+				"content": {}
+			},
+			"SYSTEM_WORKER_CONTEXT": {
+				"name": "",
+				"fo": 1216,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			}
+		},
+		"constructorID": 2147483611
+	},
+	"_ONNX": {
+		"functions": {
+			"bind": 2147483618,
+			"get worker": {
+				"id": 2147483617,
+				"resultFunctionCode": 1709,
+				"resultClass": "SystemWorker"
+			},
+			"terminate": 2147483616
+		},
+		"properties": {
+			"port": {
+				"name": "",
+				"fo": 283,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"onData": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"onDataError": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"onTerminate": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			}
+		},
+		"extends": "_CLI",
+		"constructorID": 2147483619
+	},
+	"_CLI": {
+		"functions": {
+			"get name": {
+				"id": 2147483632,
+				"resultFunctionCode": 284
+			},
+			"get EOL": {
+				"id": 2147483631,
+				"resultFunctionCode": 284
+			},
+			"get executableName": {
+				"id": 2147483630,
+				"resultFunctionCode": 284
+			},
+			"get platform": {
+				"id": 2147483629,
+				"resultFunctionCode": 284
+			},
+			"get currentDirectory": {
+				"id": 2147483628,
+				"resultFunctionCode": 1709,
+				"resultClass": "Folder"
+			},
+			"get executablePath": {
+				"id": 2147483627,
+				"resultFunctionCode": 284
+			},
+			"get executableFile": {
+				"id": 2147483626,
+				"resultFunctionCode": 1709,
+				"resultClass": "File"
+			},
+			"get controller": {
+				"id": 2147483625,
+				"resultFunctionCode": 1710,
+				"resultClass": "_CLI_Controller"
+			},
+			"escape": 2147483624,
+			"expand": 2147483623,
+			"quote": 2147483622,
+			"_chmod": 2147483621
+		},
+		"properties": {
+			"_EOL": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_name": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_platform": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_executableName": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_executablePath": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_executableFile": {
+				"name": "",
+				"fo": 1709,
+				"className": "File",
+				"componentName": "",
+				"content": {}
+			},
+			"_currentDirectory": {
+				"name": "",
+				"fo": 1709,
+				"className": "Folder",
+				"componentName": "",
+				"content": {}
+			},
+			"_controller": {
+				"name": "",
+				"fo": 1710,
+				"className": "_CLI_Controller",
+				"componentName": "",
+				"content": {}
+			}
+		},
+		"constructorID": 2147483633
+	},
+	"_ONNX_Controller": {
+		"functions": {
+			"onTerminate": 2147483596
+		},
+		"properties": {
+			"onData": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"onDataError": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"onResponse": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"onError": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			}
+		},
+		"extends": "_CLI_Controller",
+		"constructorID": 2147483597
+	},
+	"_download": {
+		"functions": {
+			"head": 2147483593,
+			"onData": 2147483592,
+			"onError": 2147483591,
+			"onResponse": 2147483590,
+			"onTerminate": 2147483589
+		},
+		"properties": {
+			"that": {
+				"name": "",
+				"fo": 1710,
+				"className": "_Model",
+				"componentName": "",
+				"content": {}
+			},
+			"file": {
+				"name": "",
+				"fo": 1709,
+				"className": "File",
+				"componentName": "",
+				"content": {}
+			},
+			"folder": {
+				"name": "",
+				"fo": 1709,
+				"className": "Folder",
+				"componentName": "",
+				"content": {}
+			},
+			"URL": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"oid": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"onDownload": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"options": {
+				"name": "",
+				"fo": 1216,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_onResponse": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			},
+			"_fileHandle": {
+				"name": "",
+				"fo": 1709,
+				"className": "FileHandle",
+				"componentName": "",
+				"content": {}
+			},
+			"bufferSize": {
+				"name": "",
+				"fo": 283,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"range": {
+				"name": "",
+				"fo": 1216,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"method": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"dataType": {
+				"name": "",
+				"fo": 284,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"automaticRedirections": {
+				"name": "",
+				"fo": 305,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"returnResponseBody": {
+				"name": "",
+				"fo": 305,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"decodeData": {
+				"name": "",
+				"fo": 305,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"headers": {
+				"name": "",
+				"fo": 1216,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"event": {
+				"name": "",
+				"fo": 1710,
+				"className": "event",
+				"componentName": "event",
+				"content": {}
+			},
+			"agent": {
+				"name": "",
+				"fo": 1216,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			}
+		},
+		"constructorID": 2147483594
+	},
+	"ONNX": {
+		"functions": {
+			"_main": 2147483581
+		},
+		"extends": "_interface",
+		"constructorID": 2147483582
+	},
+	"_interface": {
+		"functions": {
+			"_onTCP": 2147483636,
+			"terminate": 2147483635
+		},
+		"constructorID": 2147483637
+	},
+	"_models": {
+		"functions": {
+			"download": 2147483642,
+			"onDownload": 2147483641,
+			"models": 2147483640,
+			"start": 2147483639
+		},
+		"properties": {
+			"huggingfaces": {
+				"name": "",
+				"fo": 1710,
+				"className": "huggingfaces",
+				"componentName": "event",
+				"content": {}
+			},
+			"files": {
+				"name": "",
+				"fo": 1488,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"_models": {
+				"name": "",
+				"fo": 1488,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"options": {
+				"name": "",
+				"fo": 1216,
+				"className": "",
+				"componentName": "",
+				"content": {}
+			},
+			"event": {
+				"name": "",
+				"fo": 1710,
+				"className": "event",
+				"componentName": "event",
+				"content": {}
+			},
+			"_onResponse": {
+				"name": "",
+				"fo": 1709,
+				"className": "Function",
+				"componentName": "",
+				"content": {}
+			}
+		},
+		"constructorID": 2147483643
+	}
+}

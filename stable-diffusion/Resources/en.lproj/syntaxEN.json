@@ -1,0 +1,792 @@
+{
+	"_method_": {},
+	"cs.onnx": {
+		"_models": {
+			"new()": {
+				"Syntax": "**.new**( *port* : Integer; *huggingfaces* : cs.event.huggingfaces; *options* : Object; *formula* : 4D.Function; *event* : cs.event.event )",
+				"Params": [
+					[
+						"port",
+						"Integer",
+						"->"
+					],
+					[
+						"huggingfaces",
+						"cs.event.huggingfaces",
+						"->"
+					],
+					[
+						"options",
+						"Object",
+						"->"
+					],
+					[
+						"formula",
+						"4D.Function",
+						"->"
+					],
+					[
+						"event",
+						"cs.event.event",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_interface": {
+			"new()": {
+				"Syntax": "**.new**()",
+				"Params": [],
+				"Summary": ""
+			}
+		},
+		"ONNX": {
+			"new()": {
+				"Syntax": "**.new**( *port* : Integer; *huggingfaces* : cs.event.huggingfaces; *options* : Object; *event* : cs.event.event )",
+				"Params": [
+					[
+						"port",
+						"Integer",
+						"->"
+					],
+					[
+						"huggingfaces",
+						"cs.event.huggingfaces",
+						"->"
+					],
+					[
+						"options",
+						"Object",
+						"->"
+					],
+					[
+						"event",
+						"cs.event.event",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_ONNX_Controller": {
+			"new()": {
+				"Syntax": "**.new**( *CLI* : cs.onnx._CLI )",
+				"Params": [
+					[
+						"CLI",
+						"cs.onnx._CLI",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_ONNX": {
+			"new()": {
+				"Syntax": "**.new**( *command* : Text; *class* : 4D.Class )",
+				"Params": [
+					[
+						"command",
+						"Text",
+						"->"
+					],
+					[
+						"class",
+						"4D.Class",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_CLI": {
+			"new()": {
+				"Syntax": "**.new**( *executableName* : Text; *controller* : 4D.Class )",
+				"Params": [
+					[
+						"executableName",
+						"Text",
+						"->"
+					],
+					[
+						"controller",
+						"4D.Class",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_CLI_Controller": {
+			"new()": {
+				"Syntax": "**.new**( *CLI* : cs.onnx._CLI )",
+				"Params": [
+					[
+						"CLI",
+						"cs.onnx._CLI",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_server": {
+			"new()": {
+				"Syntax": "**.new**( *controller* : 4D.Class )",
+				"Params": [
+					[
+						"controller",
+						"4D.Class",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_download": {
+			"new()": {
+				"Syntax": "**.new**( *that* : cs.onnx._Model; *file* : 4D.File; *folder* : 4D.Folder; *oid* : Text; *URL* : Text; *options* : Object; *formula* : 4D.Function; *event* : cs.event.event; *onDownload* : 4D.Function )",
+				"Params": [
+					[
+						"that",
+						"cs.onnx._Model",
+						"->"
+					],
+					[
+						"file",
+						"4D.File",
+						"->"
+					],
+					[
+						"folder",
+						"4D.Folder",
+						"->"
+					],
+					[
+						"oid",
+						"Text",
+						"->"
+					],
+					[
+						"URL",
+						"Text",
+						"->"
+					],
+					[
+						"options",
+						"Object",
+						"->"
+					],
+					[
+						"formula",
+						"4D.Function",
+						"->"
+					],
+					[
+						"event",
+						"cs.event.event",
+						"->"
+					],
+					[
+						"onDownload",
+						"4D.Function",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		},
+		"_Model": {
+			"new()": {
+				"Syntax": "**.new**( *port* : Integer; *huggingfaces* : cs.event.huggingfaces; *options* : Object; *formula* : 4D.Function; *event* : cs.event.event )",
+				"Params": [
+					[
+						"port",
+						"Integer",
+						"->"
+					],
+					[
+						"huggingfaces",
+						"cs.event.huggingfaces",
+						"->"
+					],
+					[
+						"options",
+						"Object",
+						"->"
+					],
+					[
+						"formula",
+						"4D.Function",
+						"->"
+					],
+					[
+						"event",
+						"cs.event.event",
+						"->"
+					]
+				],
+				"Summary": ""
+			}
+		}
+	},
+	"_models": {
+		"models()": {
+			"Syntax": "**.models**() : cs.event.models",
+			"Params": [
+				[
+					"",
+					"cs.event.models",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"onDownload()": {
+			"Syntax": "**.onDownload**( *oid* : Text )",
+			"Params": [
+				[
+					"oid",
+					"Text",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"start()": {
+			"Syntax": "**.start**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"download()": {
+			"Syntax": "**.download**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"event": {
+			"Syntax": "event : cs.event.event"
+		},
+		"files": {
+			"Syntax": "files : Collection"
+		},
+		"options": {
+			"Syntax": "options : Object"
+		},
+		"huggingfaces": {
+			"Syntax": "huggingfaces : cs.event.huggingfaces"
+		}
+	},
+	"_interface": {
+		"terminate()": {
+			"Syntax": "**.terminate**()",
+			"Params": [],
+			"Summary": ""
+		}
+	},
+	"ONNX": {
+		"_inheritedFrom_": "_interface"
+	},
+	"_ONNX_Controller": {
+		"onTerminate()": {
+			"Syntax": "**.onTerminate**( *worker* : 4D.SystemWorker; *params* : Object )",
+			"Params": [
+				[
+					"worker",
+					"4D.SystemWorker",
+					"->"
+				],
+				[
+					"params",
+					"Object",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"onError": {
+			"Syntax": "onError : 4D.Function"
+		},
+		"onResponse": {
+			"Syntax": "onResponse : 4D.Function"
+		},
+		"onDataError": {
+			"Syntax": "onDataError : 4D.Function"
+		},
+		"onData": {
+			"Syntax": "onData : 4D.Function"
+		},
+		"_inheritedFrom_": "_CLI_Controller"
+	},
+	"_ONNX": {
+		"terminate()": {
+			"Syntax": "**.terminate**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"get worker()": {
+			"Syntax": "**.get worker**() : 4D.SystemWorker",
+			"Params": [
+				[
+					"",
+					"4D.SystemWorker",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"bind()": {
+			"Syntax": "**.bind**( *option* : Object; *properties* : Collection ) : cs.onnx._CLI",
+			"Params": [
+				[
+					"option",
+					"Object",
+					"->"
+				],
+				[
+					"properties",
+					"Collection",
+					"->"
+				],
+				[
+					"",
+					"cs.onnx._CLI",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"onTerminate": {
+			"Syntax": "onTerminate : 4D.Function"
+		},
+		"onData": {
+			"Syntax": "onData : 4D.Function"
+		},
+		"onDataError": {
+			"Syntax": "onDataError : 4D.Function"
+		},
+		"port": {
+			"Syntax": "port : Integer"
+		},
+		"_inheritedFrom_": "_CLI"
+	},
+	"_CLI": {
+		"get controller()": {
+			"Syntax": "**.get controller**()->controller : cs.onnx._CLI_Controller",
+			"Params": [
+				[
+					"controller",
+					"cs.onnx._CLI_Controller",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"expand()": {
+			"Syntax": "**.expand**( *in* : Object )->out : Object",
+			"Params": [
+				[
+					"in",
+					"Object",
+					"->"
+				],
+				[
+					"out",
+					"Object",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get executablePath()": {
+			"Syntax": "**.get executablePath**()->executablePath : Text",
+			"Params": [
+				[
+					"executablePath",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get platform()": {
+			"Syntax": "**.get platform**()->platform : Text",
+			"Params": [
+				[
+					"platform",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get executableName()": {
+			"Syntax": "**.get executableName**()->executableName : Text",
+			"Params": [
+				[
+					"executableName",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"quote()": {
+			"Syntax": "**.quote**( *in* : Text )->out : Text",
+			"Params": [
+				[
+					"in",
+					"Text",
+					"->"
+				],
+				[
+					"out",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"escape()": {
+			"Syntax": "**.escape**( *in* : Text )->out : Text",
+			"Params": [
+				[
+					"in",
+					"Text",
+					"->"
+				],
+				[
+					"out",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get currentDirectory()": {
+			"Syntax": "**.get currentDirectory**()->currentDirectory : 4D.Folder",
+			"Params": [
+				[
+					"currentDirectory",
+					"4D.Folder",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get executableFile()": {
+			"Syntax": "**.get executableFile**()->executableFile : 4D.File",
+			"Params": [
+				[
+					"executableFile",
+					"4D.File",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get EOL()": {
+			"Syntax": "**.get EOL**()->EOL : Text",
+			"Params": [
+				[
+					"EOL",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get name()": {
+			"Syntax": "**.get name**()->name : Text",
+			"Params": [
+				[
+					"name",
+					"Text",
+					"<-"
+				]
+			],
+			"Summary": ""
+		}
+	},
+	"_CLI_Controller": {
+		"execute()": {
+			"Syntax": "**.execute**( *command* : Variant; *message* : Variant; *context* : Variant ) : cs.onnx._CLI_Controller",
+			"Params": [
+				[
+					"command",
+					"Variant",
+					"->"
+				],
+				[
+					"message",
+					"Variant",
+					"->"
+				],
+				[
+					"context",
+					"Variant",
+					"->"
+				],
+				[
+					"",
+					"cs.onnx._CLI_Controller",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get instance()": {
+			"Syntax": "**.get instance**()->instance : cs.onnx._CLI",
+			"Params": [
+				[
+					"instance",
+					"cs.onnx._CLI",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"terminate()": {
+			"Syntax": "**.terminate**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"get commands()": {
+			"Syntax": "**.get commands**()->commands : Collection",
+			"Params": [
+				[
+					"commands",
+					"Collection",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get worker()": {
+			"Syntax": "**.get worker**()->worker : 4D.SystemWorker",
+			"Params": [
+				[
+					"worker",
+					"4D.SystemWorker",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"get complete()": {
+			"Syntax": "**.get complete**()->complete : Boolean",
+			"Params": [
+				[
+					"complete",
+					"Boolean",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"currentDirectory": {
+			"Syntax": "currentDirectory : 4D.Folder"
+		},
+		"onTerminate": {
+			"Syntax": "onTerminate : 4D.Function"
+		},
+		"timeout": {
+			"Syntax": "timeout : Variant"
+		},
+		"SYSTEM_WORKER_CONTEXT": {
+			"Syntax": "SYSTEM_WORKER_CONTEXT : Object"
+		},
+		"variables": {
+			"Syntax": "variables : Object"
+		},
+		"encoding": {
+			"Syntax": "encoding : Text"
+		},
+		"onResponse": {
+			"Syntax": "onResponse : 4D.Function"
+		},
+		"dataType": {
+			"Syntax": "dataType : Text"
+		},
+		"hideWindow": {
+			"Syntax": "hideWindow : Boolean"
+		}
+	},
+	"_server": {
+		"start()": {
+			"Syntax": "**.start**( *option* : Object ) : 4D.SystemWorker",
+			"Params": [
+				[
+					"option",
+					"Object",
+					"->"
+				],
+				[
+					"",
+					"4D.SystemWorker",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"_inheritedFrom_": "_ONNX"
+	},
+	"_download": {
+		"onTerminate()": {
+			"Syntax": "**.onTerminate**( *request* : 4D.HTTPRequest; *event* : Object )",
+			"Params": [
+				[
+					"request",
+					"4D.HTTPRequest",
+					"->"
+				],
+				[
+					"event",
+					"Object",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"onResponse()": {
+			"Syntax": "**.onResponse**( *request* : 4D.HTTPRequest; *event* : Object )",
+			"Params": [
+				[
+					"request",
+					"4D.HTTPRequest",
+					"->"
+				],
+				[
+					"event",
+					"Object",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"onError()": {
+			"Syntax": "**.onError**( *request* : 4D.HTTPRequest; *event* : Object )",
+			"Params": [
+				[
+					"request",
+					"4D.HTTPRequest",
+					"->"
+				],
+				[
+					"event",
+					"Object",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"onData()": {
+			"Syntax": "**.onData**( *request* : 4D.HTTPRequest; *event* : Object )",
+			"Params": [
+				[
+					"request",
+					"4D.HTTPRequest",
+					"->"
+				],
+				[
+					"event",
+					"Object",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"head()": {
+			"Syntax": "**.head**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"agent": {
+			"Syntax": "agent : Object"
+		},
+		"headers": {
+			"Syntax": "headers : Object"
+		},
+		"returnResponseBody": {
+			"Syntax": "returnResponseBody : Boolean"
+		},
+		"decodeData": {
+			"Syntax": "decodeData : Boolean"
+		},
+		"automaticRedirections": {
+			"Syntax": "automaticRedirections : Boolean"
+		},
+		"dataType": {
+			"Syntax": "dataType : Text"
+		},
+		"bufferSize": {
+			"Syntax": "bufferSize : Integer"
+		},
+		"event": {
+			"Syntax": "event : cs.event.event"
+		},
+		"range": {
+			"Syntax": "range : Object"
+		},
+		"file": {
+			"Syntax": "file : 4D.File"
+		},
+		"options": {
+			"Syntax": "options : Object"
+		},
+		"onDownload": {
+			"Syntax": "onDownload : 4D.Function"
+		},
+		"folder": {
+			"Syntax": "folder : 4D.Folder"
+		},
+		"URL": {
+			"Syntax": "URL : Text"
+		},
+		"oid": {
+			"Syntax": "oid : Text"
+		},
+		"method": {
+			"Syntax": "method : Text"
+		},
+		"that": {
+			"Syntax": "that : cs.onnx._Model"
+		}
+	},
+	"_Model": {
+		"start()": {
+			"Syntax": "**.start**()",
+			"Params": [],
+			"Summary": ""
+		},
+		"onDownload()": {
+			"Syntax": "**.onDownload**( *oid* : Text )",
+			"Params": [
+				[
+					"oid",
+					"Text",
+					"->"
+				]
+			],
+			"Summary": ""
+		},
+		"models()": {
+			"Syntax": "**.models**() : cs.event.models",
+			"Params": [
+				[
+					"",
+					"cs.event.models",
+					"<-"
+				]
+			],
+			"Summary": ""
+		},
+		"embeggings_model": {
+			"Syntax": "embeggings_model : 4D.Folder"
+		},
+		"chat_completion_model": {
+			"Syntax": "chat_completion_model : 4D.Folder"
+		},
+		"_inheritedFrom_": "_models"
+	}
+}
