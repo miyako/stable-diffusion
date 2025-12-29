@@ -30,41 +30,59 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 	While (This:C1470.huggingfaces.huggingfaces.length#0)
 		$huggingface:=This:C1470.huggingfaces.huggingfaces.shift()
 		Case of 
-			: (Match regex:C1019("https:\\/\\/huggingface\\.co\\/(.+)"; $huggingface.URL; 1; $pos; $len))
-				$URL:=Substring:C12($huggingface.URL; $pos{1}; $len{1})
-				$components:=Split string:C1554($URL; "/")
-				$USER:=$components.shift()
-				$REPO:=$components.shift()
-				$API:=["https://huggingface.co/api/models"; $URL; "?recursive=true"].join("/")
-			: (Match regex:C1019("(^|\\/[^/]+){2,}"; $huggingface.URL; 1; $pos; $len))
-				$URL:=$huggingface.URL
-				$components:=Split string:C1554($URL; "/")
-				$USER:=$components.shift()
-				$REPO:=$components.shift()
-				$API:=["https://huggingface.co/api/models"; $USER; $REPO; "tree"; $BRANCH; "?recursive=true"].join("/")
+			: (OB Instance of:C1731($huggingface.folder; 4D:C1709.Folder)) || (OB Instance of:C1731($huggingface.folder; 4D:C1709.File))
+				Case of 
+					: (Match regex:C1019("https:\\/\\/huggingface\\.co\\/(.+)"; $huggingface.URL; 1; $pos; $len))
+						$URL:=Substring:C12($huggingface.URL; $pos{1}; $len{1})
+						$components:=Split string:C1554($URL; "/")
+						$USER:=$components.shift()
+						$REPO:=$components.shift()
+						$API:=["https://huggingface.co/api/models"; $URL; "?recursive=true"].join("/")
+					: (Match regex:C1019("(^|\\/[^/]+){2,}"; $huggingface.URL; 1; $pos; $len))
+						$URL:=$huggingface.URL
+						$components:=Split string:C1554($URL; "/")
+						$USER:=$components.shift()
+						$REPO:=$components.shift()
+						$API:=["https://huggingface.co/api/models"; $USER; $REPO; "tree"; $BRANCH; "?recursive=true"].join("/")
+					Else 
+						continue
+				End case 
+				var $request : 4D:C1709.HTTPRequest
+				$request:=4D:C1709.HTTPRequest.new($API).wait()
+				If ($request.response.status=200)
+					If (Value type:C1509($request.response)=Is object:K8:27)
+						Case of 
+							: (OB Instance of:C1731($huggingface.folder; 4D:C1709.Folder))
+								$resources:=$request.response.body.map(Formula:C1597($1.result:={\
+									USER: $2; \
+									REPO: $3; \
+									BRANCH: $4; \
+									type: $1.value.type; \
+									domain: $6; \
+									size: $1.value.size; \
+									path: $1.value.path; \
+									oid: $1.value.oid; \
+									folder: $5}); $USER; $REPO; $BRANCH; $huggingface.folder; $huggingface.domain)
+								This:C1470.files:=This:C1470.files.combine($resources.query("type == :1"; "file"))
+								This:C1470._models.push([$USER; $REPO].join("/"))
+							: (OB Instance of:C1731($huggingface.folder; 4D:C1709.File))
+								var $file : Object
+								$file:=$request.response.body.query("path == :1"; $huggingface.name).first()
+								$file.domain:=$huggingface.domain
+								$file.folder:=$huggingface.folder
+								$file.folder:=$huggingface.folder
+								$file.domain:=$huggingface.domain
+								$file.USER:=$USER
+								$file.REPO:=$REPO
+								$file.BRANCH:=$BRANCH
+								This:C1470.files.push($file)
+								This:C1470._models.push([$USER; $REPO].join("/"))
+						End case 
+					End if 
+				End if 
 			Else 
 				continue
 		End case 
-		
-		var $request : 4D:C1709.HTTPRequest
-		$request:=4D:C1709.HTTPRequest.new($API).wait()
-		If ($request.response.status=200)
-			If (Value type:C1509($request.response)=Is object:K8:27)
-				$resources:=$request.response.body.map(Formula:C1597($1.result:={\
-					USER: $2; \
-					REPO: $3; \
-					BRANCH: $4; \
-					type: $1.value.type; \
-					domain: $6; \
-					size: $1.value.size; \
-					path: $1.value.path; \
-					oid: $1.value.oid; \
-					folder: $5}); $USER; $REPO; $BRANCH; $huggingface.folder; $huggingface.domain)
-				This:C1470.files:=This:C1470.files.combine($resources.query("type == :1"; "file"))
-				This:C1470._models.push([$USER; $REPO].join("/"))
-			End if 
-		End if 
-		
 	End while 
 	
 Function download()
@@ -74,9 +92,9 @@ Function download()
 			This:C1470.onDownload($file.oid)
 			continue
 		End if 
-		cs:C1710._download.new(\
+		cs:C1710.event.download.new(\
 			This:C1470; \
-			$file.folder.file($file.path); \
+			OB Instance of:C1731($file.folder; 4D:C1709.Folder) ? $file.folder.file($file.path) : $file.folder; \
 			$file.folder; \
 			$file.oid; \
 			["https://huggingface.co"; $file.USER; $file.REPO; "resolve"; $file.BRANCH; $file.path].join("/"); \

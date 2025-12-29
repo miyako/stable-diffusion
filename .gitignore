@@ -1,2 +1,5 @@
 models/v2-1_768-nonema-pruned-Q8_0.gguf
 cpp/stable-diffusion.cpp/
+stable-diffusion/Data/*
+stable-diffusion/Project/DerivedData/*
+stable-diffusion/userPreferences.*

@@ -1,11 +1,11 @@
-var $ONNX : cs:C1710.ONNX
+TRACE:C157
+var $SD : cs:C1710.SD
 
 If (False:C215)
-	$ONNX:=cs:C1710.ONNX.new()  //default
+	$SD:=cs:C1710.SD.new()  //default
 Else 
 	var $homeFolder : 4D:C1709.Folder
-	$homeFolder:=Folder:C1567(fk home folder:K87:24).folder(".ONNX")
-	var $file : 4D:C1709.File
+	$homeFolder:=Folder:C1567(fk home folder:K87:24).folder(".Stable-Diffusion")
 	var $URL : Text
 	var $port : Integer
 	
@@ -29,20 +29,15 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 	
 	$port:=8080
 	
-	$folder:=$homeFolder.folder("microsoft/Phi-3.5-mini-instruct")
-	$path:="cpu_and_mobile/cpu-int4-awq-block-128-acc-level-4"
-	$URL:="https://huggingface.co/microsoft/Phi-3.5-mini-instruct-onnx/tree/main/cpu_and_mobile/cpu-int4-awq-block-128-acc-level-4"
-	$chat:=cs:C1710.event.huggingface.new($folder; $URL; $path; "chat.completion")
-	
-	$folder:=$homeFolder.folder("all-MiniLM-L6-v2")
+	$model:=$homeFolder.file("gpustack/stable-diffusion-xl-1.0-turbo/stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
 	$path:=""
-	$URL:="ONNX-models/all-MiniLM-L6-v2-ONNX"
-	$embeddings:=cs:C1710.event.huggingface.new($folder; $URL; $path; "embedding")
+	$URL:="gpustack/stable-diffusion-xl-1.0-turbo-GGUF/stable-diffusion-xl-1.0-turbo-Q4_0.gguf"
+	$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "image"; "stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
 	
-	$options:={}
+	$options:={host: "0.0.0.0"}
 	var $huggingfaces : cs:C1710.event.huggingfaces
-	$huggingfaces:=cs:C1710.event.huggingfaces.new([$chat; $embeddings])
+	$huggingfaces:=cs:C1710.event.huggingfaces.new([$image])
 	
-	$ONNX:=cs:C1710.ONNX.new($port; $huggingfaces; $options; $event)
+	$SD:=cs:C1710.SD.new($port; $huggingfaces; $options; $event)
 	
 End if 

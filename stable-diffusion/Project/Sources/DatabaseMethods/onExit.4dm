@@ -1,3 +1,3 @@
-var $ONNX : cs:C1710.ONNX
-$ONNX:=cs:C1710.ONNX.new()
-$ONNX.terminate()
+var $SD : cs:C1710.SD
+$SD:=cs:C1710.SD.new()
+$SD.terminate()

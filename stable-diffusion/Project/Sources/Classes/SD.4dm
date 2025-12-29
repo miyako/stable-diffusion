@@ -4,22 +4,20 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 	
 	Super:C1705()
 	
-	var $ONNX : cs:C1710.workers.worker
-	$ONNX:=cs:C1710.workers.worker.new(cs:C1710._server)
+	var $SD : cs:C1710.workers.worker
+	$SD:=cs:C1710.workers.worker.new(cs:C1710._server)
 	
-	If (Not:C34($ONNX.isRunning($port)))
+	If (Not:C34($SD.isRunning($port)))
 		
 		var $homeFolder : 4D:C1709.Folder
-		$homeFolder:=Folder:C1567(fk home folder:K87:24).folder(".ONNX")
+		$homeFolder:=Folder:C1567(fk home folder:K87:24).folder(".Stable-Diffusion")
 		
 		If ($huggingfaces=Null:C1517) || (Not:C34(OB Instance of:C1731($huggingfaces; cs:C1710.event.huggingfaces))) || ($huggingfaces.huggingfaces.length=0)
-			$folder:=$homeFolder.folder("Phi-3.5-mini-instruct")
-			$URL:="microsoft/Phi-3.5-mini-instruct"
-			$chat:=cs:C1710.event.huggingface.new($folder; $URL; "chat.completion")
-			$folder:=$homeFolder.folder("all-MiniLM-L6-v2")
-			$URL:="ONNX-models/all-MiniLM-L6-v2-ONNX"
-			$embeddings:=cs:C1710.event.huggingface.new($folder; $URL; "embedding")
-			$huggingfaces:=cs:C1710.event.huggingfaces.new([$chat; $embeddings])
+			$model:=$homeFolder.file("gpustack/stable-diffusion-xl-1.0-turbo/stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
+			$path:=""
+			$URL:="gpustack/stable-diffusion-xl-1.0-turbo-GGUF/stable-diffusion-xl-1.0-turbo-Q4_0.gguf"
+			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "image")
+			$huggingfaces:=cs:C1710.event.huggingfaces.new([$image])
 		End if 
 		
 		If ($port=0) || ($port<0) || ($port>65535)
