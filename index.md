@@ -70,70 +70,59 @@ Unless the server is already running (in which case the costructor does nothing)
 Now you can test the server:
 
 ```
-curl -X 'POST' \
-  'http://127.0.0.1:8080/v1/chat/completions' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
+curl http://localhost:8080/v1/images/generations \
+  -H "Content-Type: application/json" \
   -d '{
-    "messages": [
-      {
-        "role": "system",
-        "content": "You are a helpful assistant."
-      },
-      {
-        "role": "user",
-        "content": "Explain quantum computing in one sentence."
-      }
-    ],
-    "temperature": 0.7
+    "prompt": "A futuristic city with flying cars, cyberpunk style, cinematic lighting",
+    "size": "512x512",
+    "n": 1,
+    "response_format": "url"
   }'
-```
-
-```
-curl -X POST http://127.0.0.1:8080/v1/embeddings \
-     -H "Content-Type: application/json" \
-     -d '{"input":"Rain won’t stop me. Wind won’t stop me. Neither will driving snow. Sweltering summer heat<2028>will only raise my determination. With a body built for endurance, a heart free of greed, I’ll never lose my temper, trying always to keep a quiet smile on my face."}'
 ```
 
 Or, use AI Kit:
 
 ```4d
-var $ChatCompletionsParameters : cs.AIKit.OpenAIChatCompletionsParameters
-$ChatCompletionsParameters:=cs.AIKit.OpenAIChatCompletionsParameters.new({model: ""})
+var $AIClient : cs.AIKit.OpenAI
+$AIClient:=cs.AIKit.OpenAI.new()
 
-$ChatCompletionsParameters.max_completion_tokens:=2048
-$ChatCompletionsParameters.n:=1
-$ChatCompletionsParameters.temperature:=0.7
-//%W-550.26
-$ChatCompletionsParameters.top_k:=50
-$ChatCompletionsParameters.top_p:=0.9
-//%W+550.26
-$ChatCompletionsParameters.body:=Formula($0:={\
-top_k: This.top_k; \
-top_p: This.top_p; \
-temperature: This.temperature; \
-n: This.n; \
-max_completion_tokens: This.max_completion_tokens})
-$messages:=[]
-$messages.push({role: "system"; content: "You are a helpful assistant."})
-$messages.push({role: "user"; content: "The window was shattered. Inside the room were 3 cats, a piano, 1 million dollars, a baseball bat, a bar of soap. What happened?"})
+$AIClient.baseURL:="http://localhost:8080/v1/images/generations"
+$AIClient.apiKey:=""
 
-var $OpenAI : cs.AIKit.OpenAI
-$OpenAI:=cs.AIKit.OpenAI.new({baseURL: "http://127.0.0.1:8080/v1"})
+var $text : Text
+$text:="A futuristic city with flying cars, cyberpunk style, cinematic lighting"
 
-var $ChatCompletionsResult : cs.AIKit.OpenAIChatCompletionsResult
-$ChatCompletionsResult:=$OpenAI.chat.completions.create($messages; $ChatCompletionsParameters)
-If ($ChatCompletionsResult.success)
-    ALERT($ChatCompletionsResult.choice.message.text)
-End if 
+var $parameters : cs.AIKit.OpenAIImageParameters
+$parameters:=cs.AIKit.OpenAIImageParameters.new()
+$parameters.size:="512x512"
+$parameters.model:=""
+
+var $result : cs.AIKit.OpenAIImagesResult
+$result:=$AIClient.images.generate($text; $parameters)
+
+Case of 
+    : ($parameters.response_format="b64_json")
+        var $data : Blob
+         Case of 
+    : ($result.image.b64_json#Null)
+        BASE64 DECODE($result.image.b64_json; $data)
+        Folder(fk desktop folder).file("skylinecity."+$parameters.model+".jpeg").setContent($data)
+    : ($result.image.url#Null)
+        If (200=HTTP Get($result.image.url; $data))
+            Folder(fk desktop folder).file("skylinecity."+$parameters.model+".jpeg").setContent($data)
+        End if 
+         End case 
+    Else 
+        $result.image.saveToDisk(Folder(fk desktop folder).file("skylinecity."+$parameters.model+".png"))
+End case
 ```
 
 Finally to terminate the server:
 
 ```4d
-var $onnx : cs.ONNX.ONNX
-$onnx:=cs.ONNX.ONNX.new()
-$onnx.terminate()
+var $SD : cs.SD
+$SD:=cs.SD.new()
+$SD.terminate()
 ```
 
 #### Models

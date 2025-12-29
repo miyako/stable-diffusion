@@ -19,13 +19,15 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 		$command+=" "
 	End if 
 	
+	$command+=" --listen-port "+String:C10($option.port)+" "
+	
 	var $arg : Object
 	var $valueType : Integer
 	var $key : Text
 	
 	For each ($arg; OB Entries:C1720($option))
 		Case of 
-			: (["version"; "help"; "image_generation_model"].includes($arg.key))
+			: (["version"; "help"; "port"; "image_generation_model"].includes($arg.key))
 				continue
 		End case 
 		$valueType:=Value type:C1509($arg.value)
