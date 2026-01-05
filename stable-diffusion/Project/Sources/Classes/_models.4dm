@@ -88,8 +88,6 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 								End if 
 								$file.domain:=$huggingface.domain
 								$file.folder:=$huggingface.folder
-								$file.folder:=$huggingface.folder
-								$file.domain:=$huggingface.domain
 								$file.USER:=$USER
 								$file.REPO:=$REPO
 								$file.BRANCH:=$BRANCH
