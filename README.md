@@ -131,7 +131,7 @@ builds the real CMake targets **`sd-server` and `sd-cli`**, explicitly enables
 `SD_BUILD_EXAMPLES`, disables `SD_SERVER_BUILD_FRONTEND`, and uses `SD_METAL=ON`
 on macOS. There is no active `SD_BUILD_SERVER` option at this revision.
 It disables host-native tuning and OpenMP (no external `libomp` dependency),
-initializes the pinned WebP/WebM submodules, and records the resolved source,
+initializes the pinned ggml inference engine and WebP/WebM submodules, and records the resolved source,
 submodule revisions, CMake options and executable SHA-256 hashes in
 `build-info.json`. It separately builds/packages `native/cache` for each target,
 recording the helper source hash. Universal cross-compilation is followed by a native smoke

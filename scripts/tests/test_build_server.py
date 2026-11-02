@@ -14,6 +14,15 @@ spec.loader.exec_module(build_server)
 
 
 class BuildConfigurationTests(unittest.TestCase):
+    def test_fresh_checkouts_initialize_inference_and_media_submodules(self):
+        source = Path("fresh-upstream")
+        with mock.patch.object(build_server, "run") as run:
+            build_server.initialize_submodules(source)
+        run.assert_called_once_with(
+            "git", "-C", source, "submodule", "update", "--init", "--recursive",
+            "--depth=1", "--", "ggml", "thirdparty/libwebp", "thirdparty/libwebm",
+        )
+
     def test_lock_and_documentation_provenance(self):
         lock = json.loads((ROOT / "scripts/upstream.json").read_text())
         self.assertRegex(lock["revision"], r"^[0-9a-f]{40}$")
