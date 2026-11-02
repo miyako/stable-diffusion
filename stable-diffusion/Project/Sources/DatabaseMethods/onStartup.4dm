@@ -19,12 +19,14 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 */
 	
 	$event.onError:=Formula:C1597(ALERT:C41($2.message))
-	$event.onSuccess:=Formula:C1597(ALERT:C41($2.models.extract("name").join(",")+" loaded!"))
+	$event.onSuccess:=Formula:C1597(LOG EVENT:C667(Into 4D debug message:K38:5; "Server process started; poll /sdcpp/v1/models/status before generating"))
 	$event.onData:=Formula:C1597(LOG EVENT:C667(Into 4D debug message:K38:5; This:C1470.file.fullName+":"+String:C10((This:C1470.range.end/This:C1470.range.length)*100; "###.00%")))
 	$event.onData:=Formula:C1597(MESSAGE:C88(This:C1470.file.fullName+":"+String:C10((This:C1470.range.end/This:C1470.range.length)*100; "###.00%")))
 	$event.onResponse:=Formula:C1597(LOG EVENT:C667(Into 4D debug message:K38:5; This:C1470.file.fullName+":download complete"))
 	$event.onResponse:=Formula:C1597(MESSAGE:C88(This:C1470.file.fullName+":download complete"))
 	$event.onTerminate:=Formula:C1597(LOG EVENT:C667(Into 4D debug message:K38:5; (["process"; $1.pid; "terminated!"].join(" "))))
+	$event.onStdOut:=Formula:C1597(LOG EVENT:C667(Into 4D debug message:K38:5; $2.data))
+	$event.onStdErr:=Formula:C1597(LOG EVENT:C667(Into 4D debug message:K38:5; $2.data))
 	
 	$port:=8080
 	
@@ -56,7 +58,7 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 			$URL:="leejet/FLUX.1-schnell-gguf/flux1-schnell-q4_k.gguf"
 			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "diffusion"; "flux1-schnell-q4_k.gguf")
 			
-			$options:={listen_ip: "0.0.0.0"; cfg_scale: "1.0"; sampling_method: "euler"; steps: 4; vae_tiling: True:C214}
+			$options:={listen_ip: "127.0.0.1"; cfg_scale: 1; sampling_method: "euler"; steps: 4; vae_tiling: True:C214}
 			$huggingfaces:=cs:C1710.event.huggingfaces.new([$vae; $clip_l; $t5xxl; $image])
 			
 		: (False:C215)
@@ -66,7 +68,7 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 			$URL:="gpustack/stable-diffusion-xl-1.0-turbo-GGUF/stable-diffusion-xl-1.0-turbo-Q4_0.gguf"
 			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "image"; "stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
 			
-			$options:={listen_ip: "0.0.0.0"; cfg_scale: "1.0"}
+			$options:={listen_ip: "127.0.0.1"; cfg_scale: 1}
 			$huggingfaces:=cs:C1710.event.huggingfaces.new([$image])
 			
 		: (True:C214)
@@ -76,7 +78,7 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 			$URL:="gpustack/stable-diffusion-v2-1-turbo-GGUF/stable-diffusion-v2-1-turbo-FP16.gguf"
 			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "image"; "stable-diffusion-v2-1-turbo-FP16.gguf")
 			
-			$options:={listen_ip: "0.0.0.0"; cfg_scale: "1.0"}
+			$options:={listen_ip: "127.0.0.1"; cfg_scale: 1}
 			$huggingfaces:=cs:C1710.event.huggingfaces.new([$image])
 			
 		: (False:C215)
@@ -104,7 +106,7 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 			$URL:="silveroxides/Chroma-GGUF/chroma-unlocked-v50/chroma-unlocked-v50-Q4_0.gguf"
 			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "diffusion"; "chroma-unlocked-v50/chroma-unlocked-v50-Q4_0.gguf")
 			
-			$options:={listen_ip: "0.0.0.0"; cfg_scale: "1.0"; sampling_method: "euler"; steps: 12}
+			$options:={listen_ip: "127.0.0.1"; cfg_scale: 1; sampling_method: "euler"; steps: 12}
 			$huggingfaces:=cs:C1710.event.huggingfaces.new([$vae; $clip_l; $t5xxl; $image])
 			
 		: (False:C215)
@@ -121,7 +123,7 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 			$URL:="leejet/Ovis-Image-7B-GGUF/ovis_image-Q4_0.gguf"
 			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "diffusion"; "ovis_image-Q4_0.gguf")
 			
-			$options:={listen_ip: "0.0.0.0"; cfg_scale: "1.0"; sampling_method: "euler"; steps: 8}
+			$options:={listen_ip: "127.0.0.1"; cfg_scale: 1; sampling_method: "euler"; steps: 8}
 			$huggingfaces:=cs:C1710.event.huggingfaces.new([$vae; $llm; $image])
 			
 		: (False:C215)
@@ -144,7 +146,7 @@ Function onTerminate($worker : 4D.SystemWorker; $params : Object)
 			$URL:="leejet/Z-Image-Turbo-GGUF/z_image_turbo-Q4_0.gguf"
 			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "diffusion"; "z_image_turbo-Q4_0.gguf")
 			
-			$options:={listen_ip: "0.0.0.0"; cfg_scale: "1.0"; sampling_method: "euler"; steps: 8}
+			$options:={listen_ip: "127.0.0.1"; cfg_scale: 1; sampling_method: "euler"; steps: 8}
 			$huggingfaces:=cs:C1710.event.huggingfaces.new([$vae; $llm; $image])
 			
 	End case 

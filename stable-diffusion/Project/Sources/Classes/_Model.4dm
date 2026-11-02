@@ -1,5 +1,5 @@
-property image_generation_model : 4D:C1709.Folder
-property diffusion_model : 4D:C1709.Folder
+property image_generation_model : 4D:C1709.File
+property diffusion_model : 4D:C1709.File
 
 Class extends _models
 
@@ -7,7 +7,7 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 	
 	Super:C1705($port; $huggingfaces; $options; $formula; $event)
 	
-	If (Not:C34(This:C1470.offline))
+	If (Not:C34(This:C1470.failed))
 		This:C1470.download()
 	End if 
 	
@@ -24,14 +24,21 @@ Function models() : cs:C1710.event.models
 	return cs:C1710.event.models.new($models)
 	
 Function onDownload($oid : Text)
+
+	If (This:C1470.failed) || (This:C1470.completed)
+		return
+	End if
+	If (This:C1470.files.length=0) || (This:C1470.files.first().id#$oid)
+		Super:C1706.onDownload($oid)
+		return
+	End if
 	
-	var $downloaded : cs:C1710.event.huggingface
-	$downloaded:=This:C1470.files.query("oid == :1"; $oid).first()
+	var $downloaded : Object
+	$downloaded:=This:C1470.files.query("id == :1"; $oid).first()
 	
-	If ($downloaded#Null:C1517)
+	If ($downloaded#Null:C1517) && ($downloaded.bind=True:C214)
 		var $model : Object
-		$model:=OB Instance of:C1731($downloaded.folder; 4D:C1709.Folder)\
-			 ? $downloaded.folder.folder($downloaded.path).parent : $downloaded.folder
+		$model:=File:C1566($downloaded.destination; fk platform path:K87:2)
 		
 		Case of 
 			: ($downloaded.domain="image")
@@ -46,6 +53,10 @@ Function onDownload($oid : Text)
 	Super:C1706.onDownload($oid)
 	
 Function start()
+
+	If (This:C1470.failed) || (Not:C34(This:C1470.completed))
+		return
+	End if
 	
 	var $SD : cs:C1710.workers.worker
 	$SD:=cs:C1710.workers.worker.new(cs:C1710._server)

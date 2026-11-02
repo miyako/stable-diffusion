@@ -4,6 +4,10 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 	
 	Super:C1705()
 	
+	If ($port<=0) || ($port>65535)
+		$port:=8080
+	End if
+
 	var $SD : cs:C1710.workers.worker
 	$SD:=cs:C1710.workers.worker.new(cs:C1710._server)
 	
@@ -17,12 +21,8 @@ Class constructor($port : Integer; $huggingfaces : cs:C1710.event.huggingfaces; 
 			$model:=$HOME.file("gpustack/stable-diffusion-xl-1.0-turbo/stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
 			$path:=""
 			$URL:="gpustack/stable-diffusion-xl-1.0-turbo-GGUF/stable-diffusion-xl-1.0-turbo-Q4_0.gguf"
-			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "image")
+			$image:=cs:C1710.event.huggingface.new($model; $URL; $path; "image"; "stable-diffusion-xl-1.0-turbo-Q4_0.gguf")
 			$huggingfaces:=cs:C1710.event.huggingfaces.new([$image])
-		End if 
-		
-		If ($port=0) || ($port<0) || ($port>65535)
-			$port:=8080
 		End if 
 		
 		This:C1470._main($port; $huggingfaces; $HOME; $options; $event)

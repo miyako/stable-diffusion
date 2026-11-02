@@ -9,11 +9,16 @@ on:
       - '*/Project/Sources/*/*.4DForm'
       - '*/Project/Sources/*.4DCatalog'
       - '*/Project/Resources/**'
+      - 'stable-diffusion/Resources/**'
+      - 'scripts/**'
+      - 'native/**'
+      - '.github/workflows/build-server.yml'
+      - '.github/workflows/publish.yml'
   workflow_dispatch:
     inputs:
         use_self_hosted:
             type: boolean
-            description: when github hosted runners are busy
+            description: "Use a self-hosted Mac for 4D packaging (server builds remain GitHub-hosted)"
             required: true
             default: false
         mode:
@@ -27,10 +32,20 @@ on:
 
 env: 
   project_path: stable-diffusion/Project/stable-diffusion.4DProject
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
   
 jobs:
 
+  server:
+    uses: ./.github/workflows/build-server.yml
+    permissions:
+      contents: read
+
   publish:
+    needs: server
     if: ${{ github.event.inputs.use_self_hosted != 'true' }}
     permissions: write-all
     runs-on: [macos-latest]
@@ -44,6 +59,20 @@ jobs:
 
       - name: checkout 
         uses: actions/checkout@v4
+
+      - name: Download freshly built resource packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: server-*
+          merge-multiple: true
+          path: .build/server-artifacts
+
+      - name: Stage source-built executables and provenance
+        run: |
+          tar -xzf .build/server-artifacts/macOS.tar.gz -C stable-diffusion/Resources/bin
+          tar -xzf .build/server-artifacts/Windows.tar.gz -C stable-diffusion/Resources/bin
+          codesign --verify stable-diffusion/Resources/bin/macOS/sd-server
+          stable-diffusion/Resources/bin/macOS/sd-server --version
 
       - name: set version
         id: version
@@ -111,6 +140,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
 
   publish-locally:
+    needs: server
     if: ${{ github.event.inputs.use_self_hosted == 'true' }}
     permissions: write-all
     runs-on: [self-hosted, macos]
@@ -124,6 +154,20 @@ jobs:
 
       - name: checkout 
         uses: actions/checkout@v4
+
+      - name: Download freshly built resource packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: server-*
+          merge-multiple: true
+          path: .build/server-artifacts
+
+      - name: Stage source-built executables and provenance
+        run: |
+          tar -xzf .build/server-artifacts/macOS.tar.gz -C stable-diffusion/Resources/bin
+          tar -xzf .build/server-artifacts/Windows.tar.gz -C stable-diffusion/Resources/bin
+          codesign --verify stable-diffusion/Resources/bin/macOS/sd-server
+          stable-diffusion/Resources/bin/macOS/sd-server --version
 
       - name: set version
         id: version
