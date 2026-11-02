@@ -275,6 +275,9 @@ python3 -m unittest discover -s scripts/tests -v
 The smoke check verifies help/version, a temporary model-less server, empty
 models/status and HTTP 503 when generating without weights. Windows and both
 macOS architectures are covered by the source-build workflow.
+Startup has a 300-second deadline to accommodate first-use embedded Metal
+library compilation, including on Intel; override it with
+`--startup-timeout SECONDS`. A timeout or process exit still fails the check.
 Download tests execute `sd-cache`, real loopback HTTP fixtures and integrity/
 offline cases, plus static 4D wiring checks. They do **not** establish real 4D
 callback execution; use the opt-in
