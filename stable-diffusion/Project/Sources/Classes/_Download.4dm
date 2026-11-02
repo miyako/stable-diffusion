@@ -7,7 +7,7 @@ property _fileHandle : 4D:C1709.FileHandle
 property URL; method; dataType : Text
 property automaticRedirections; returnResponseBody; decodeData; done; accepted : Boolean
 property timeout : Real
-property redirects : Integer
+property redirects; generation : Integer
 
 Class constructor($owner : cs:C1710._models; $entry : Object)
 	This:C1470.that:=$owner
@@ -21,7 +21,8 @@ Class constructor($owner : cs:C1710._models; $entry : Object)
 	This:C1470.returnResponseBody:=False:C215
 	This:C1470.decodeData:=False:C215
 	This:C1470.timeout:=1800
-	This:C1470.headers:={Accept: "application/octet-stream"; "Accept-Encoding": "identity"}
+	This:C1470.headers:={Accept: "application/octet-stream"}
+	This:C1470.headers["Accept-Encoding"]:="identity"
 	This:C1470.range:={length: $entry.size; start: 0; end: 0; ranges: False:C215}
 
 Function head()
@@ -48,14 +49,24 @@ Function head()
 
 Function send()
 	This:C1470.accepted:=False:C215
+	This:C1470.generation+=1
 	OB REMOVE:C1226(This:C1470.headers; "Authorization")
 	If (Position:C15("https://huggingface.co/"; This:C1470.URL)=1)
 		If (Value type:C1509(This:C1470.that.options.HF_TOKEN)=Is text:K8:3) && (This:C1470.that.options.HF_TOKEN#"")
 			This:C1470.headers.Authorization:="Bearer "+This:C1470.that.options.HF_TOKEN
 		End if
 	End if
-	var $io : Object
-	$io:=sdDownloadIO(Formula:C1597(4D:C1709.HTTPRequest.new(This:C1470.URL; This:C1470)); This:C1470)
+	var $io; $options : Object
+	$options:={owner: This:C1470; generation: This:C1470.generation; method: This:C1470.method; headers: This:C1470.headers; \
+	dataType: This:C1470.dataType; automaticRedirections: This:C1470.automaticRedirections; \
+	returnResponseBody: This:C1470.returnResponseBody; decodeData: This:C1470.decodeData; timeout: This:C1470.timeout}
+	$options.onHeaders:=Formula:C1597(This:C1470.owner.onHeaders($1; $2))
+	$options.onData:=Formula:C1597(This:C1470.owner.onData($1; $2))
+	$options.onResponse:=Formula:C1597(This:C1470.owner.onResponse($1; $2))
+	$options.onError:=Formula:C1597(This:C1470.owner.onError($1; $2))
+	// Each options object keeps its generation when a redirect starts a new request.
+	$options.onTerminate:=Formula:C1597(This:C1470.owner.onTerminate($1; $2; This:C1470.generation))
+	$io:=sdDownloadIO(Formula:C1597(4D:C1709.HTTPRequest.new(This:C1470.URL; $options)); This:C1470)
 	This:C1470.request:=$io.value
 	If (Not:C34($io.success)) || (This:C1470.request=Null:C1517)
 		This:C1470.fail("Cannot start HTTP download")
@@ -172,8 +183,8 @@ Function onError($request : 4D:C1709.HTTPRequest; $event : Object)
 		This:C1470.fail("HTTP transport failed (connection/TLS/timeout); retry the download")
 	End if
 
-Function onTerminate($request : 4D:C1709.HTTPRequest; $event : Object)
-	If (Not:C34(This:C1470.done)) && ($request=This:C1470.request)
+Function onTerminate($request : 4D:C1709.HTTPRequest; $event : Object; $generation : Integer)
+	If (Not:C34(This:C1470.done)) && ($generation=This:C1470.generation)
 		This:C1470.fail("HTTP request terminated before verified completion")
 	End if
 

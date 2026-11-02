@@ -126,6 +126,28 @@ downloaded. Check each consumer's model-directory semantics before porting this.
 
 ## Testing and portability recipe
 
+### 4D 20.7 compiler compatibility
+
+Compile the production classes with the actual supported tool4d, not just
+static source assertions. In tool4d 20.7.101905, a quoted object-literal key
+such as `{"Accept-Encoding": "identity"}` is a syntax error. Create the object
+first, then assign `headers["Accept-Encoding"]:="identity"`.
+
+The same compiler rejects equality between two HTTPRequest objects; assigning
+them to generic Object variables does not make that comparison valid. For the
+redirect termination guard, use a per-request generation retained by that
+request's callback options and compare integers, not request references. The
+old request's termination must not fail the replacement. This approach has
+compiled successfully in the local disposable project; that is not evidence
+that the asynchronous callback/redirect harness has executed successfully.
+
+An "unknown class" diagnostic can be a warning: it is not proof of compilation
+failure or a reason by itself to rewrite dependencies. Check compiler success
+and diagnostic severity separately. See the `4d-native-release` skill for
+artifact and publication checks.
+
+### Runtime coverage
+
 Build/stage the real helper, then:
 
 ```sh
