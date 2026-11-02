@@ -219,8 +219,11 @@ The reusable cross-repository implementation/testing guide is
 
 The smoke check starts on loopback with an empty temporary model directory,
 checks `/v1/models` and `/sdcpp/v1/models/status`, and confirms generation
-returns HTTP 503 without a loaded model. This does **not** validate image
-generation quality, model compatibility or GPU inference. No weights are
+returns HTTP 503 without a loaded model.
+The startup check allows up to 300 seconds for first-use backend initialization,
+including compilation of embedded Metal libraries on Intel Macs. Use
+`--startup-timeout SECONDS` to set another positive, bounded startup budget.
+This does **not** validate image generation quality, model compatibility or GPU inference. No weights are
 downloaded by the build/check scripts. The 4D default constructor, in contrast,
 downloads its configured SDXL Turbo checkpoint when needed.
 

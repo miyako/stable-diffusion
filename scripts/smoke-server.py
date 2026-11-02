@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import math
 from pathlib import Path
 import socket
 import subprocess
@@ -12,7 +13,32 @@ import urllib.error
 import urllib.request
 
 
-def smoke(executable):
+DEFAULT_STARTUP_TIMEOUT = 300.0
+
+
+def wait_for_models(process, base, startup_timeout):
+    deadline = time.monotonic() + startup_timeout
+    while True:
+        if process.poll() is not None:
+            raise RuntimeError(f"Server exited with {process.returncode}")
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise RuntimeError(
+                f"Server did not become responsive within {startup_timeout:g} seconds; "
+                "see startup log for backend initialization errors or delays"
+            )
+        try:
+            with urllib.request.urlopen(base + "/v1/models", timeout=min(1, remaining)) as response:
+                return json.load(response)
+        except (urllib.error.URLError, TimeoutError):
+            remaining = deadline - time.monotonic()
+            if remaining > 0:
+                time.sleep(min(0.25, remaining))
+
+
+def smoke(executable, startup_timeout=DEFAULT_STARTUP_TIMEOUT):
+    if not math.isfinite(startup_timeout) or startup_timeout <= 0:
+        raise ValueError("Startup timeout must be a positive finite number of seconds")
     executable = str(Path(executable).resolve())
     help_text = subprocess.run([executable, "--help"], check=True,
                                capture_output=True, text=True).stdout
@@ -32,19 +58,13 @@ def smoke(executable):
                 [executable, "--listen-ip", "127.0.0.1", "--listen-port", str(port),
                  "--model-dir", directory], cwd=directory, stdout=log, stderr=log,
             )
+            started = time.monotonic()
             try:
                 base = f"http://127.0.0.1:{port}"
-                for _ in range(120):
-                    if process.poll() is not None:
-                        raise RuntimeError(f"Server exited with {process.returncode}")
-                    try:
-                        with urllib.request.urlopen(base + "/v1/models", timeout=1) as response:
-                            models = json.load(response)
-                        break
-                    except (urllib.error.URLError, TimeoutError):
-                        time.sleep(0.25)
-                else:
-                    raise RuntimeError("Server did not become responsive")
+                # Embedded Metal sources compile on first use, including on Intel CI.
+                models = wait_for_models(process, base, startup_timeout)
+                print(f"Server responsive after {time.monotonic() - started:.2f}s "
+                      f"(startup budget {startup_timeout:g}s)", flush=True)
                 assert models == {"data": []}, models
                 with urllib.request.urlopen(base + "/", timeout=5) as response:
                     assert response.read().decode() == "Stable Diffusion Server is running"
@@ -81,4 +101,9 @@ def smoke(executable):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("executable", type=Path)
-    smoke(parser.parse_args().executable)
+    parser.add_argument("--startup-timeout", type=float, default=DEFAULT_STARTUP_TIMEOUT,
+                        help="Maximum startup seconds, including first-use Metal compilation (default: 300)")
+    args = parser.parse_args()
+    if not math.isfinite(args.startup_timeout) or args.startup_timeout <= 0:
+        parser.error("--startup-timeout must be a positive finite number")
+    smoke(args.executable, args.startup_timeout)
