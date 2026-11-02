@@ -60,6 +60,12 @@ jobs:
       - name: checkout 
         uses: actions/checkout@v4
 
+      - name: set version
+        id: version
+        uses: miyako/4D/.github/actions/package-set-version@v1
+        with:
+          mode: ${{ steps.configure.outputs.mode }}
+
       - name: Download freshly built resource packages
         uses: actions/download-artifact@v4
         with:
@@ -73,12 +79,6 @@ jobs:
           tar -xzf .build/server-artifacts/Windows.tar.gz -C stable-diffusion/Resources/bin
           codesign --verify stable-diffusion/Resources/bin/macOS/sd-server
           stable-diffusion/Resources/bin/macOS/sd-server --version
-
-      - name: set version
-        id: version
-        uses: miyako/4D/.github/actions/package-set-version@v1
-        with:
-          mode: ${{ steps.configure.outputs.mode }}
 
       - name: get tool version
         id: tool
@@ -155,6 +155,12 @@ jobs:
       - name: checkout 
         uses: actions/checkout@v4
 
+      - name: set version
+        id: version
+        uses: miyako/4D/.github/actions/package-set-version@v1
+        with:
+          mode: ${{ steps.configure.outputs.mode }}
+
       - name: Download freshly built resource packages
         uses: actions/download-artifact@v4
         with:
@@ -168,12 +174,6 @@ jobs:
           tar -xzf .build/server-artifacts/Windows.tar.gz -C stable-diffusion/Resources/bin
           codesign --verify stable-diffusion/Resources/bin/macOS/sd-server
           stable-diffusion/Resources/bin/macOS/sd-server --version
-
-      - name: set version
-        id: version
-        uses: miyako/4D/.github/actions/package-set-version@v1
-        with:
-          mode: ${{ steps.configure.outputs.mode }}
 
       - name: get tool version
         id: tool
