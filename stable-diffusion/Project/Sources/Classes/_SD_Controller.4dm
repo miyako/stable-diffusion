@@ -1,5 +1,3 @@
-property onData : 4D:C1709.Function
-property onDataError : 4D:C1709.Function
 property onResponse : 4D:C1709.Function
 property onError : 4D:C1709.Function
 //property onTerminate : 4D.Function
@@ -25,4 +23,22 @@ Function onTerminate($worker : 4D:C1709.SystemWorker; $params : Object)
 	
 	If ($instance.onTerminate#Null:C1517) && (OB Instance of:C1731($instance.onTerminate; 4D:C1709.Function))
 		$instance.onTerminate.call(This:C1470; $worker; $params)
-	End if 
+	End if
+
+Function onData($worker : 4D:C1709.SystemWorker; $params : Object)
+
+	var $instance : cs:C1710._server
+	$instance:=This:C1470.instance
+
+	If (OB Instance of:C1731($instance.onData; 4D:C1709.Function))
+		$instance.onData.call(This:C1470; $worker; $params)
+	End if
+
+Function onDataError($worker : 4D:C1709.SystemWorker; $params : Object)
+
+	var $instance : cs:C1710._server
+	$instance:=This:C1470.instance
+
+	If (OB Instance of:C1731($instance.onDataError; 4D:C1709.Function))
+		$instance.onDataError.call(This:C1470; $worker; $params)
+	End if

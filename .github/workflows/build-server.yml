@@ -1,0 +1,94 @@
+name: Build upstream server
+
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      upstream_ref:
+        description: "Optional upstream commit/tag to evaluate (releases always use scripts/upstream.json)"
+        type: string
+        required: false
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'native/**'
+      - 'stable-diffusion/Project/Sources/Classes/_Download*.4dm'
+      - 'stable-diffusion/Project/Sources/Classes/_models.4dm'
+      - 'stable-diffusion/Project/Sources/Classes/_Model.4dm'
+      - 'stable-diffusion/Project/Sources/Classes/_server.4dm'
+      - 'stable-diffusion/Project/Sources/Methods/sdDownload*.4dm'
+      - 'stable-diffusion/Project/Sources/Methods/onModel.4dm'
+      - 'stable-diffusion/Project/Sources/Methods/start.4dm'
+      - 'tests/**'
+      - '.github/workflows/build-server.yml'
+      - '.github/workflows/publish.yml'
+permissions:
+  contents: read
+
+concurrency:
+  group: server-build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15
+            platform: macOS
+            arch: universal
+          - os: windows-2022
+            platform: Windows
+            arch: x86_64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check build configuration
+        run: python -m unittest discover -s scripts/tests -v
+      - name: Build and smoke check upstream executables
+        env:
+          UPSTREAM_REF: ${{ inputs.upstream_ref }}
+        shell: bash
+        run: |
+          args=()
+          if [ -n "$UPSTREAM_REF" ]; then args+=(--ref "$UPSTREAM_REF"); fi
+          python scripts/build-server.py --arch "${{ matrix.arch }}" "${args[@]}"
+      - name: Archive resource package (preserving executable permissions)
+        shell: bash
+        run: tar -czf ".build/${{ matrix.platform }}.tar.gz" -C .build/package "${{ matrix.platform }}"
+      - name: Exercise native cache integrity and metadata contracts
+        env:
+          SD_CACHE_EXECUTABLE: .build/package/${{ matrix.platform }}/sd-cache${{ matrix.platform == 'Windows' && '.exe' || '' }}
+        run: python -m unittest discover -s scripts/tests -p test_download_cache.py -v
+      - uses: actions/upload-artifact@v4
+        with:
+          name: server-${{ matrix.platform }}
+          path: .build/${{ matrix.platform }}.tar.gz
+          if-no-files-found: error
+
+  intel-smoke:
+    needs: build
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: server-macOS
+          path: .build
+      - name: Check universal package on Intel
+        run: |
+          tar -xzf .build/macOS.tar.gz -C .build
+          python scripts/smoke-server.py .build/macOS/sd-server
+          .build/macOS/sd-cli --help
+          SD_CACHE_EXECUTABLE=.build/macOS/sd-cache python -m unittest discover -s scripts/tests -p test_download_cache.py -v
