@@ -100,6 +100,17 @@ class BuildConfigurationTests(unittest.TestCase):
         self.assertEqual(workflow.count("server-artifacts/macOS.tar.gz"), 2)
         self.assertEqual(workflow.count("server-artifacts/Windows.tar.gz"), 2)
 
+    def test_release_versions_clean_checkout_before_replacing_tracked_binaries(self):
+        workflow = (ROOT / ".github/workflows/publish.yml").read_text()
+        for job in ("publish:", "publish-locally:"):
+            body = workflow.split("  " + job, 1)[1]
+            body = body.split("\n  publish-locally:", 1)[0]
+            with self.subTest(job=job):
+                self.assertLess(body.index("- name: set version"),
+                                body.index("- name: Stage source-built executables"))
+                self.assertLess(body.index("- name: Stage source-built executables"),
+                                body.index("- name: build\n"))
+
     def test_unsupported_configurations_fail_before_fetching_source(self):
         cases = [
             ("Linux", []),
