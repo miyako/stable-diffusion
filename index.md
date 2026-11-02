@@ -71,6 +71,8 @@ Outputs: `.build/package/macOS/` and `.build/package/Windows/`. The actual CMake
 targets are `sd-server` and `sd-cli`, enabled by `SD_BUILD_EXAMPLES=ON`;
 `SD_BUILD_SERVER` is not an active option. macOS uses `SD_METAL=ON`, and
 `SD_SERVER_BUILD_FRONTEND=OFF` avoids a Node/pnpm dependency.
+Fresh source checkouts initialize the pinned ggml inference engine and WebP/WebM
+submodules; unused CUTLASS and frontend submodules are not required.
 
 Use `--ref <full-commit-sha>` to evaluate an update, then review and update the
 lock and both documentation pages after checking both platforms. Releases

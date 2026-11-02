@@ -121,6 +121,13 @@ def cmake_options(system, arch, backend):
     return options
 
 
+def initialize_submodules(source):
+    # Initialize the inference engine as well as media dependencies on fresh runners.
+    # CUDA's CUTLASS and the disabled web frontend are not used by these packages.
+    run("git", "-C", source, "submodule", "update", "--init", "--recursive",
+        "--depth=1", "--", "ggml", "thirdparty/libwebp", "thirdparty/libwebm")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ref", help="Upstream commit/tag to verify instead of the lock")
@@ -163,9 +170,7 @@ def main():
     revision = run("git", "-C", source, "rev-parse", "HEAD", capture=True)
     if not args.ref and revision != lock["revision"]:
         raise RuntimeError("Fetched revision does not match the upstream lock")
-    # CUDA's large CUTLASS submodule is not used by either supported package.
-    run("git", "-C", source, "submodule", "update", "--init", "--recursive",
-        "--depth=1", "--", "thirdparty/libwebp", "thirdparty/libwebm")
+    initialize_submodules(source)
     arches = ["arm64", "x86_64"] if arch == "universal" else [arch]
     platform_name = "macOS" if system == "Darwin" else "Windows"
     output = (args.output or work / "package" / platform_name).resolve()
