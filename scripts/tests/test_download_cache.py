@@ -293,6 +293,15 @@ class DownloadWiringTests(unittest.TestCase):
         self.assertIn('This:C1470.failed:=True', models)
         self.assertIn('"HF_TOKEN"', server)
 
+    def test_numeric_server_arguments_are_locale_independent(self):
+        server = (ROOT / "stable-diffusion/Project/Sources/Classes/_server.4dm").read_text()
+        helper = (ROOT / "stable-diffusion/Project/Sources/Methods/_argNumber.4dm").read_text()
+        self.assertIn('+_argNumber($arg.value)+', server)
+        self.assertNotIn('String:C10($arg.value)', server)
+        self.assertIn('#DECLARE($value : Real)->$text : Text', helper)
+        self.assertIn('$text:=JSON Stringify:C1217($value)', helper)
+        self.assertIn('"invisible":true', helper)
+
 
 if __name__ == "__main__":
     unittest.main()

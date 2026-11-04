@@ -141,6 +141,9 @@ domains map `image` to `--model`, `diffusion` to `--diffusion-model`, and
 `vae`, `clip_l`, `t5xxl`, `llm` to their corresponding arguments.
 The wrapper preserves upstream underscore flags such as `--clip_l`;
 other option keys such as `listen_ip` and `cfg_scale` become hyphenated flags.
+Numeric option values always use a period decimal separator, whatever the
+system locale (`cfg_scale: 1.5` becomes `--cfg-scale 1.5`, not `1,5`); very
+small values use exponent notation such as `1E-05`.
 Use native `platformPath` file paths, especially on Windows.
 
 #### Verified downloads and offline use
