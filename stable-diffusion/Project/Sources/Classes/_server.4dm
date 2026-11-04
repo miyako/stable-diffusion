@@ -47,7 +47,7 @@ Function start($option : Object) : 4D:C1709.SystemWorker
 		End if
 		Case of 
 			: ($valueType=Is real:K8:4) || ($valueType=Is integer:K8:5)
-				$command+=(" --"+$key+" "+String:C10($arg.value)+" ")
+				$command+=(" --"+$key+" "+_argNumber($arg.value)+" ")
 			: ($valueType=Is text:K8:3)
 				$command+=(" --"+$key+" "+This:C1470.escape($arg.value)+" ")
 			: ($valueType=Is boolean:K8:9) && ($arg.value)
