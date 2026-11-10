@@ -8,9 +8,11 @@ plugins_dir: _plugins
 baseurl: /stable-diffusion
 
 title: "Stable Diffusion"
-description: "Use Stable Diffusion from 4D"
-logo: "/assets/logo.png"   # optional
-show_downloads: true       # controls the download links in header
+description: "Local image generation with stable-diffusion.cpp. Run a local server or integrate it with 4D."
+url: "https://miyako.github.io"
+logo: "/assets/stable-diffusion.png"
+component_version: "20.0.12"
+show_downloads: false      # component releases are linked from the home page
 github:
   is_user_page: true
   owner_url: "https://github.com/miyako"
@@ -22,6 +24,8 @@ exclude:
   - "resources"
   - "LICENSE"
   - "README.md"
+  - "SITE-DESIGN.md"
+  - "package.json"
   - "Gemfile"
   - "scripts"
   - "native"
