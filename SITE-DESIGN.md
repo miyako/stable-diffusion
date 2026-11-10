@@ -13,7 +13,7 @@ Local implementation: [site styles](assets/css/style.scss),
 from generated Pages.
 
 Site branding: `assets/stable-diffusion.png` is an unchanged copy of the 4D project's
-`stable-diffusion/icon.png`, used for the sidebar, home-page engine icon, favicon, and structured
+`stable-diffusion/logo.png`, used for the sidebar, home-page engine icon, favicon, and structured
 metadata. Accent: burgundy (CTranslate2 palette).
 
 The previous single-page documentation now lives in `guide.md` with its text
