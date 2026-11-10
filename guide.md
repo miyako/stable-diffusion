@@ -1,5 +1,8 @@
 ---
 layout: default
+title: Use with 4D
+description: "Install, build and run the stable-diffusion.cpp component for 4D: provenance, verified downloads, the HTTP API and AI Kit."
+guide: true
 ---
 
 ![version](https://img.shields.io/badge/version-20%2B-E23089)
@@ -9,13 +12,13 @@ layout: default
 
 # Use Stable Diffusion from 4D
 
-#### Abstract
+## Abstract
 
 [**stable-diffusion.cpp**](https://github.com/leejet/stable-diffusion.cpp) is a
 C/C++ diffusion inference engine supporting SD, FLUX and other image/video model
 families. This component runs its local HTTP server from **4D 20+**.
 
-#### Install and provenance
+## Install and provenance
 
 Install the component from an approved
 [release](https://github.com/miyako/stable-diffusion/releases) in your database's
@@ -29,10 +32,14 @@ The verified upstream source is
 [`scripts/upstream.json`](https://github.com/miyako/stable-diffusion/blob/main/scripts/upstream.json)
 lock, not an unpinned latest download.
 
+<div class="table-wrap" markdown="1">
+
 | Package | Architecture | Backend / prerequisites |
 | --- | --- | --- |
 | macOS | Universal Apple Silicon + Intel | Metal + CPU/Accelerate; macOS 14+; AVX2 on Intel |
 | Windows | x64 | CPU, AVX2; Windows 10/11; Visual C++ 2015-2022 x64 runtime |
+
+</div>
 
 Both `sd-server` and `sd-cli` are built from source, with WebP/WebM support,
 embedded Metal kernels and no external OpenMP library. The optional upstream
@@ -49,7 +56,7 @@ Packages additionally include the local native `sd-cache` integrity helper,
 required by the updated 4D downloader but not by standalone server users.
 Keep it alongside the server/CLI; no deployed Python runtime is needed.
 
-#### Build from source
+## Build from source
 
 Use Git, Python 3.9+, CMake 3.24+ and a C/C++17 compiler. macOS additionally
 needs Xcode Command Line Tools and Ninja; Windows needs Visual Studio 2022's
@@ -90,7 +97,7 @@ Windows intentionally retains the VC++ runtime prerequisite (upstream WebM
 uses the DLL CRT). Manifest hashes cover locally signed source-build artifacts,
 not the final release container after Developer ID signing/notarization.
 
-#### Usage from 4D
+## Usage from 4D
 
 Instantiate `cs.SD.SD` in your **On Startup** database method. The constructor
 is `new(port; huggingfaces; HOME; options; event)`:
@@ -146,7 +153,7 @@ system locale (`cfg_scale: 1.5` becomes `--cfg-scale 1.5`, not `1,5`); very
 small values use exponent notation such as `1E-05`.
 Use native `platformPath` file paths, especially on Windows.
 
-#### Verified downloads and offline use
+## Verified downloads and offline use
 
 Use the fresh native resource package, **including `sd-cache`**, with the
 updated 4D sources. Legacy checked-in binaries lack this helper and report
@@ -187,7 +194,7 @@ Keep receipts with trusted local caches; they are not signed attestations.
 Interrupted candidates can be removed only after confirming no download is active.
 The server process-start callback remains distinct from model readiness.
 
-#### Standalone server and HTTP API
+## Standalone server and HTTP API
 
 ```sh
 .build/package/macOS/sd-server \
@@ -219,7 +226,7 @@ The response carries **base64-encoded PNG bytes in `data[].b64_json`**, not a
 download URL. `response_format: "url"` is not implemented. `output_format`
 can be `png`, `jpeg` or `webp`.
 
-#### AI Kit compatibility
+## AI Kit compatibility
 
 Use [4D AI Kit](https://developer.4d.com/docs/aikit/overview)'s OpenAI client
 with base URL **`http://127.0.0.1:8080/v1`**, not the complete generations
@@ -249,12 +256,16 @@ using an image. This is **partial** OpenAI image API compatibility, not a
 general OpenAI server. See the
 [pinned API reference](https://github.com/leejet/stable-diffusion.cpp/blob/290148d2e31ca6ef9757d567905776b5f3646db5/examples/server/api.md).
 
+<div class="table-wrap" markdown="1">
+
 | API | Availability |
 | --- | --- |
 | `GET /v1/models` | Available; empty until a model is loaded |
 | `POST /v1/images/generations` | Available; base64 response |
 | `POST /v1/images/edits` | Available; multipart upload, model-dependent |
 | `/v1/chat/completions`, `/v1/embeddings`, `/v1/moderations`, `/v1/files` | Not provided |
+
+</div>
 
 Finally, terminate the component's server:
 
@@ -264,7 +275,7 @@ $SD:=cs.SD.SD.new()
 $SD.terminate()
 ```
 
-#### Models, checks and caveats
+## Models, checks and caveats
 
 Model files may require multiple GB of disk/RAM; use matching encoders and VAE
 for your model family. The 4D default downloads SDXL Turbo if absent. Builds
